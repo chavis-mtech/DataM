@@ -8,8 +8,6 @@ High-performance row-level DB client with zero-copy I/O, snapshots & rescue for 
 ![SolidJS](https://img.shields.io/badge/solidjs-ui-33a)
 ![License](https://img.shields.io/badge/license-TBD-lightgrey)
 
-> TH summary: ไคลเอนต์ฐานข้อมูลความเร็วสูงแบบ row-level ใช้ zero-copy/binary I/O พร้อม Snapshot/Time-Travel และ Rescue จาก WAL/Journal ออกแบบบน **Clean Architecture**.
-
 ---
 
 ## Why RoverDB-Client?
@@ -52,10 +50,10 @@ High-performance row-level DB client with zero-copy I/O, snapshots & rescue for 
 flowchart LR
   user[DevOps/DBA/Engineer] -->|interacts| UI[Tauri + SolidJS]
   UI --> IPC[Shared Memory + Lock-free Ring Buffer]
-  IPC --> CORE[Core (Rust)]
+  IPC --> CORE["Core (Rust)"]
   CORE --> ROW[Row Engine / Tx Manager / Recovery]
-  ROW -->|binary protocol| PG[(PostgreSQL)]
-  ROW -->|mmap / file| SQLITE[(SQLite)]
+  ROW -->|binary protocol| PG["(PostgreSQL)""]
+  ROW -->|mmap / file| SQLITE["(SQLite)"]
   CORE --> STORE[Local WAL/Snapshot Store]
   CORE --> KEYCHAIN[OS Keychain]
 ```
