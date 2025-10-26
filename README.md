@@ -1,6 +1,3 @@
-พร้อมครับ—ผมอัปเดต **README.md** เป็นชื่อใหม่ `RoverDB-Client` ให้เรียบร้อย (รวม Clean Architecture และสรุปแบบอ่านลื่น) เอาไปวางในรีโปได้เลย
-
-````markdown
 # RoverDB-Client
 High-performance row-level DB client with zero-copy I/O, snapshots & rescue for PostgreSQL/SQLite — **Clean Architecture (Ports & Adapters)** — Rust + Tauri + SolidJS
 
@@ -16,11 +13,11 @@ High-performance row-level DB client with zero-copy I/O, snapshots & rescue for 
 ---
 
 ## Why RoverDB-Client?
-- **Row-level power**: Inspect/Edit แบบ binary-aware พร้อม diff ก่อน commit  
-- **Fast path**: Zero-copy slices, vectorized I/O, latency-aware prefetch  
-- **Always recoverable**: Snapshot & Time-Travel (mmap + COW), WAL/Journal Rescue (PG/SQLite)  
-- **Safe by design**: Idempotent writes, explicit TX boundaries, lock/timeout hints  
-- **Pluggable**: Drivers: PostgreSQL (binary, COPY), SQLite (mmap) → Next: MySQL  
+- **Row-level power**: Inspect/Edit แบบ binary-aware พร้อม diff ก่อน commit
+- **Fast path**: Zero-copy slices, vectorized I/O, latency-aware prefetch
+- **Always recoverable**: Snapshot & Time-Travel (mmap + COW), WAL/Journal Rescue (PG/SQLite)
+- **Safe by design**: Idempotent writes, explicit TX boundaries, lock/timeout hints
+- **Pluggable**: Drivers: PostgreSQL (binary, COPY), SQLite (mmap) → Next: MySQL
 - **Desktop-native**: Tauri + SolidJS (lightweight, cross-platform)
 
 ---
@@ -61,7 +58,7 @@ flowchart LR
   ROW -->|mmap / file| SQLITE[(SQLite)]
   CORE --> STORE[Local WAL/Snapshot Store]
   CORE --> KEYCHAIN[OS Keychain]
-````
+```
 
 ### C4 — Containers & Major Components
 
@@ -73,7 +70,6 @@ flowchart LR
 * **Local WAL/Snapshot Store**: checksum + monotonic IDs
 
 **Key Ports (traits)**
-
 ```rust
 pub trait RowRepository {
     fn fetch(&self, q: RowQuery) -> Result<RowSet, FetchError>;
@@ -90,7 +86,6 @@ pub trait RecoveryGateway {
 ---
 
 ## Data Flow
-
 ```mermaid
 sequenceDiagram
   participant U as UI (SolidJS)
@@ -123,7 +118,6 @@ sequenceDiagram
 * **Adaptive Fetch**: vectorized I/O, dynamic rowset sizing, latency-aware prefetch
 * **Offline Snapshot & Time-Travel**: mmap + copy-on-write; browse offline
 * **Rescue Wizard**
-
   * **PostgreSQL**: read latest WAL to selectively recover rows without cluster-wide PITR
   * **SQLite**: read journal/WAL, salvage good pages to SQL/CSV
 * **Binary COPY/Export** (PG) — significantly faster than text
@@ -142,7 +136,6 @@ sequenceDiagram
 ---
 
 ## Repo Layout
-
 ```
 /roverdb-client
   /crates
@@ -165,18 +158,16 @@ sequenceDiagram
 ## Getting Started
 
 ### Prerequisites
-
 * **Rust** (stable) + `cargo`
 * **Node.js** (LTS) + `pnpm`/`npm`
 * **Tauri deps**: platform toolchains (Xcode CLT on macOS, MSVC on Windows, GTK/WebKit on Linux)
 * PostgreSQL/SQLite available locally or via network
 
 ### Build & Run (dev)
-
 ```bash
 # 1) Clone
-git clone https://github.com/chavis-mtech/RoverDB-Client.git 
-cd roverdb-client
+git clone https://github.com/chavis-mtech/RoverDB-Client.git
+cd RoverDB-Client
 
 # 2) Backend workspace
 cargo build
@@ -193,9 +184,7 @@ cargo tauri dev
 ```
 
 ### Config (env)
-
 Create `.env` or export variables:
-
 ```bash
 ROVERDB_LOG=info
 ROVERDB_CACHE_DIR=~/.cache/roverdb
@@ -208,25 +197,21 @@ SQLITE_PATH=/path/to/database.db
 ## Usage Examples
 
 ### Connect to PostgreSQL
-
 1. Open RoverDB-Client → **Connections → New**
 2. Paste `PG_URI`
 3. **Browse → Inspect**: select table → stream rows (virtualized)
 
 ### Edit with Diff/Commit
-
 1. Filter rows → inline edit
 2. **Preview Diff** (pre-commit)
 3. **Commit**: Safe-Guard applies (idempotent, lock/timeout hints)
 
 ### Snapshot & Time-Travel
-
 * **Create Snapshot**: lightweight (mmap + COW)
 * **Browse Offline**: open snapshot file → read-only grid
 * **Time-Travel**: jump to snapshot/time; compare & export
 
 ### Rescue Wizard (PG)
-
 * **Scan WAL** (latest LSN) → filter by table/time/PK
 * **Dry-run**: impact preview (rows/keys)
 * **Selective Restore**: apply plan, generate report
@@ -236,7 +221,6 @@ SQLITE_PATH=/path/to/database.db
 ---
 
 ## Security
-
 * Secrets in **OS Keychain**, zeroization for sensitive buffers
 * Local WAL/Snapshot: **checksum + monotonic IDs**
 * Explicit TX boundaries, idempotent operations
@@ -245,7 +229,6 @@ SQLITE_PATH=/path/to/database.db
 ---
 
 ## Observability
-
 * Tracing via **OpenTelemetry** (spans for fetch/commit/rescue)
 * Metrics: throughput (rows/s), latency, cache hit, ring-buffer backpressure
 * Structured logs; crash reporting with minimal PII
@@ -254,7 +237,6 @@ SQLITE_PATH=/path/to/database.db
 ---
 
 ## Testing
-
 * **Unit** & **Property-based** (`proptest`) for domain/usecases
 * **Integration** with containers (Postgres) / temp files (SQLite)
 * **Fuzz** (`cargo-fuzz`) for binary codec/decoder
@@ -264,7 +246,6 @@ SQLITE_PATH=/path/to/database.db
 ---
 
 ## Roadmap
-
 * **MVP**: PG + SQLite adapters, Inspect/Edit, Snapshot, PG COPY, Basic Rescue
 * **v0.2**: MySQL adapter, richer rescue filters, SDKs (Java/Kotlin/Python/Node)
 * **v0.3**: Advanced Time-Travel UI, multi-snapshot diff, staged commits
@@ -273,7 +254,6 @@ SQLITE_PATH=/path/to/database.db
 ---
 
 ## Contributing
-
 1. Open an issue for discussion / design ADR
 2. Follow module boundaries (**Clean Architecture** rules)
 3. Add tests + docs; run `cargo fmt && cargo clippy`
@@ -282,13 +262,11 @@ SQLITE_PATH=/path/to/database.db
 ---
 
 ## License
-
 TBD (suggested: MIT or Apache-2.0)
 
 ---
 
 ## Acknowledgements
-
 * PostgreSQL Binary Protocol, COPY
 * SQLite file/journal format
 * Tauri, SolidJS, OpenTelemetry
