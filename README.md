@@ -52,7 +52,7 @@ flowchart LR
   UI --> IPC[Shared Memory + Lock-free Ring Buffer]
   IPC --> CORE["Core (Rust)"]
   CORE --> ROW[Row Engine / Tx Manager / Recovery]
-  ROW -->|binary protocol| PG["(PostgreSQL)""]
+  ROW -->|binary protocol| PG["(PostgreSQL)"]
   ROW -->|mmap / file| SQLITE["(SQLite)"]
   CORE --> STORE[Local WAL/Snapshot Store]
   CORE --> KEYCHAIN[OS Keychain]
