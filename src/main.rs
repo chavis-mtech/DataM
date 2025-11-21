@@ -1,4 +1,4 @@
-//! RoverDB Hello (Colorful)
+//! DataM Hello (Colorful)
 //! Prints a colorful banner with a crab emoji and short descriptions (EN/TH).
 
 use owo_colors::OwoColorize;
@@ -9,7 +9,7 @@ fn divider() {
 
 fn main() {
     // Title
-    println!("{}  {}", "🦀".bright_red(), "RoverDB-Client".bold().bright_cyan());
+    println!("{}  {}", "🦀".bright_red(), "DataM (Data-M Database Client)".bold().bright_cyan());
     divider();
 
     // English description
