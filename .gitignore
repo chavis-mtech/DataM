@@ -26,3 +26,6 @@ target
 /target
 /.idea/
 /.obsidian/
+
+# Obsidian app/workspace state inside the planning vault (keep notes, ignore state)
+DataM-Vault/.obsidian/
