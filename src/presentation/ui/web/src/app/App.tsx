@@ -22,7 +22,7 @@ const App: Component = () => {
           items={[
             'Single entry point in src/index.tsx',
             'App shell moved to src/app/App.tsx',
-            'Shared styling loaded from src/styles/global.css',
+            'App styling loaded from src/app/app.css',
           ]}
         />
         <StatusCard
