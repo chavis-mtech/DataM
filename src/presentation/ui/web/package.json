@@ -1,5 +1,5 @@
 {
-  "name": "vite-template-solid",
+  "name": "datam-web",
   "version": "0.0.0",
   "description": "",
   "type": "module",
@@ -7,11 +7,12 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "check": "tsc --noEmit"
   },
   "license": "MIT",
   "devDependencies": {
-    "solid-devtools": "^0.34.3",
+    "@types/node": "^24.3.0",
     "typescript": "^5.7.2",
     "vite": "^7.1.4",
     "vite-plugin-solid": "^2.11.8"
