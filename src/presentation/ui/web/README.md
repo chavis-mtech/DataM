@@ -8,10 +8,13 @@ Minimal SolidJS web UI scaffold for the DataM project.
 src/
   app/
     App.tsx
-  components/
-    StatusCard.tsx
-  styles/
-    global.css
+    app.css
+  shared/
+    ui/
+      components/
+        StatusCard.tsx
+      layout/
+        AppShell.tsx
   index.tsx
 ```
 

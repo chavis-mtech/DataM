@@ -1,9 +1,11 @@
 import type { Component } from 'solid-js';
-import StatusCard from '../components/StatusCard';
+import StatusCard from '../shared/ui/components/StatusCard';
+import AppShell from '../shared/ui/layout/AppShell';
+import './app.css';
 
 const App: Component = () => {
   return (
-    <main class="app-shell">
+    <AppShell>
       <section class="hero">
         <p class="eyebrow">DataM</p>
         <h1>Web UI foundation</h1>
@@ -32,7 +34,7 @@ const App: Component = () => {
           ]}
         />
       </section>
-    </main>
+    </AppShell>
   );
 };
 
