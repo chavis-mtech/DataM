@@ -9,6 +9,14 @@ src/
   app/
     App.tsx
     app.css
+    bootstrap.tsx
+  application/
+    use-cases/
+      get-foundation-overview.ts
+  features/
+    foundation/
+      ui/
+        FoundationOverview.tsx
   shared/
     ui/
       components/

@@ -1,39 +1,15 @@
 import type { Component } from 'solid-js';
-import StatusCard from '../shared/ui/components/StatusCard';
+import { getFoundationOverview } from '../application/use-cases/get-foundation-overview';
+import FoundationOverview from '../features/foundation/ui/FoundationOverview';
 import AppShell from '../shared/ui/layout/AppShell';
 import './app.css';
 
 const App: Component = () => {
+  const overview = getFoundationOverview();
+
   return (
     <AppShell>
-      <section class="hero">
-        <p class="eyebrow">DataM</p>
-        <h1>Web UI foundation</h1>
-        <p class="lead">
-          The entry point is now separated from the app shell, styles are
-          loaded globally, and the starter template has been replaced with a
-          clearer baseline for growth.
-        </p>
-      </section>
-
-      <section class="status-grid" aria-label="Project status">
-        <StatusCard
-          title="Solid baseline"
-          items={[
-            'Single entry point in src/index.tsx',
-            'App shell moved to src/app/App.tsx',
-            'App styling loaded from src/app/app.css',
-          ]}
-        />
-        <StatusCard
-          title="Still missing"
-          items={[
-            'Routing if the app will have multiple screens',
-            'API client or state boundary for real data',
-            'Tests, linting, and environment configuration',
-          ]}
-        />
-      </section>
+      <FoundationOverview overview={overview} />
     </AppShell>
   );
 };
