@@ -13,14 +13,14 @@ export function getFoundationOverview(): FoundationOverview {
     eyebrow: 'DataM',
     title: 'Web UI foundation',
     description:
-      'The entry point is limited to bootstrap, the app layer composes dependencies, and feature UI consumes an application-level view model.',
+      'Tailwind now provides the styling system, app bootstrap stays isolated, and feature UI consumes an application-level view model instead of owning setup concerns.',
     sections: [
       {
-        title: 'Clean architecture baseline',
+        title: 'Tailwind baseline',
         items: [
-          'src/index.tsx only boots the application',
-          'src/app owns composition and global app styling',
-          'src/application owns use-case level orchestration',
+          'Tailwind v4 is wired into Vite through the official plugin',
+          'Project theme tokens live in src/app/app.css',
+          'Feature and shared UI now use utility classes instead of ad-hoc selectors',
         ],
       },
       {

@@ -34,6 +34,12 @@ npm run check
 npm run build
 ```
 
+## Styling
+
+- Tailwind CSS v4 is integrated through the Vite plugin
+- Theme tokens and base styles live in `src/app/app.css`
+- UI components prefer utility classes and keep shared pieces in `src/shared/ui`
+
 ## What is still missing
 
 - Routing when the UI grows beyond a single screen
