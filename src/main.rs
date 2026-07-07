@@ -1,22 +1,24 @@
-//! DataM Hello (Colorful)
-//! Prints a colorful banner with a crab emoji and short descriptions (EN/TH).
+//! Composition root — the only place where concrete types meet (Layer Map).
 
-use owo_colors::OwoColorize;
+use std::sync::Arc;
 
-fn divider() {
-    println!("{}", "────────────────────────────────────────────────────────".bright_black());
-}
+use datam::application::RunQuery;
+use datam::infrastructure::SqliteExecutor;
+use datam::presentation::adapters::http::{AppState, router};
 
-fn main() {
-    // Title
-    println!("{}  {}", "🦀".bright_red(), "DataM (Data-M Database Client)".bold().bright_cyan());
-    divider();
+#[tokio::main]
+async fn main() {
+    let db_path = std::env::args().nth(1).unwrap_or_else(|| "test.db".to_string());
+    let addr = "127.0.0.1:8080";
 
-    // English description
-    println!("{}", "Description:".bold().bright_magenta());
-    println!("  {}", "High-performance row-level DB client — zero-copy I/O, snapshots & rescue for PostgreSQL/SQLite.".bright_green());
-    println!("  {}", "Clean Architecture (Ports & Adapters) — Rust + Tauri + SolidJS.".bright_blue());
+    let executor = Arc::new(SqliteExecutor::new(&db_path));
+    let run_query = Arc::new(RunQuery::new(executor));
+    let app = router(AppState { run_query });
 
-    divider();
-    println!("{} {}", "Tip:".bold().bright_magenta(), "Run with `cargo run`".bright_white());
+    let listener = tokio::net::TcpListener::bind(addr)
+        .await
+        .expect("failed to bind");
+
+    println!("DataM M0 — serving {db_path} on http://{addr} (POST /query)");
+    axum::serve(listener, app).await.expect("server error");
 }
