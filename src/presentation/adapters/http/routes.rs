@@ -16,12 +16,21 @@ use crate::domain::Query;
 
 #[derive(Clone)]
 pub struct AppState {
-    pub run_query: Arc<RunQuery>,
+    /// One `RunQuery` per engine. Same interactor, different infra adapter
+    /// injected underneath — this is the whole point of the port/adapter seam.
+    pub sqlite: Arc<RunQuery>,
+    pub mariadb: Arc<RunQuery>,
 }
 
 #[derive(Deserialize)]
 pub struct QueryRequest {
     pub sql: String,
+    #[serde(default = "default_engine")]
+    pub engine: String,
+}
+
+fn default_engine() -> String {
+    "sqlite".to_string()
 }
 
 #[derive(Serialize)]
@@ -50,7 +59,12 @@ async fn run_query(
 ) -> Result<Json<QueryResponse>, (StatusCode, Json<ErrorResponse>)> {
     let started = Instant::now();
 
-    match state.run_query.execute(Query { sql: req.sql }).await {
+    let run_query = match req.engine.as_str() {
+        "mariadb" | "mysql" => &state.mariadb,
+        _ => &state.sqlite,
+    };
+
+    match run_query.execute(Query { sql: req.sql }).await {
         Ok(row_set) => Ok(Json(QueryResponse {
             row_count: row_set.rows.len(),
             columns: row_set.columns,
