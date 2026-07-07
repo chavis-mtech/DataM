@@ -12,13 +12,13 @@ status: active
 ## ลำดับ 7 ก้าวแรก (จับต้องได้ ทำได้พรุ่งนี้)
 
 > [!todo] สัปดาห์นี้ = ทำ [[M0 - Tracer Bullet]] ให้จบ ไล่ตามนี้
-> - [ ] **ก้าว 1 — Cargo.toml** ลบ `sqlite`, `owo-colors` → ใส่ `tokio` (full), `axum`, `rusqlite` (bundled), `serde`, `serde_json`, `tower-http` (cors) → `cargo build` ผ่าน
-> - [ ] **ก้าว 2 — ไฟล์ SQLite ทดสอบ** สร้าง `test.db` มี 1 ตาราง ~1,000 แถว (มีคอลัมน์ตัวเลข **และ** string)
-> - [ ] **ก้าว 3 — domain** `RowSet { columns: Vec<String>, rows: Vec<Vec<String>> }` + `Query { sql }` + `DbError` (ยังเป็น String ได้ ความเร็วเริ่ม M2)
-> - [ ] **ก้าว 4 — application** `trait QueryExecutor { fn run(&self, q) -> RowSet }` + interactor `RunQuery(dyn QueryExecutor)` (ห้ามมี SQL/socket ในนี้)
-> - [ ] **ก้าว 5 — infrastructure** `SqliteExecutor` (rusqlite ใน `spawn_blocking`) impl `QueryExecutor`
-> - [ ] **ก้าว 6 — presentation** axum `POST /query {sql}` → `RunQuery` → JSON + CORS, `main.rs` ต่อสายทั้งหมด
-> - [ ] **ก้าว 7 — UI** ทิ้ง Hello world → `<textarea>` + ปุ่ม Run + `fetch` → `<table>` · จดเวลา p50 ลง [[Performance Budget]]
+> - [x] **ก้าว 1 — Cargo.toml** ลบ `sqlite`, `owo-colors` → ใส่ `tokio` (full), `axum`, `rusqlite` (bundled), `serde`, `serde_json`, `tower-http` (cors) → `cargo build` ผ่าน
+> - [x] **ก้าว 2 — ไฟล์ SQLite ทดสอบ** สร้าง `test.db` มี 1 ตาราง ~1,000 แถว (มีคอลัมน์ตัวเลข **และ** string)
+> - [x] **ก้าว 3 — domain** `RowSet { columns: Vec<String>, rows: Vec<Vec<String>> }` + `Query { sql }` + `DbError` (ยังเป็น String ได้ ความเร็วเริ่ม M2)
+> - [x] **ก้าว 4 — application** `trait QueryExecutor { fn run(&self, q) -> RowSet }` + interactor `RunQuery(dyn QueryExecutor)` (ห้ามมี SQL/socket ในนี้)
+> - [x] **ก้าว 5 — infrastructure** `SqliteExecutor` (rusqlite ใน `spawn_blocking`) impl `QueryExecutor`
+> - [x] **ก้าว 6 — presentation** axum `POST /query {sql}` → `RunQuery` → JSON + CORS, `main.rs` ต่อสายทั้งหมด
+> - [x] **ก้าว 7 — UI** ทิ้ง Hello world → `<textarea>` + ปุ่ม Run + `fetch` → `<table>` · จดเวลา p50 ลง [[Performance Budget]]
 
 > [!success] จบสัปดาห์ = เห็นแถวจริงจาก SQLite ใน browser → skeleton "มีชีวิต" ครบ 4 ชั้น
 > หลังจากนี้ทุก milestone คือ "สลับชิ้นเร็วเข้าไปแทน" โดยของรันได้ตลอด
