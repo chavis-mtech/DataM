@@ -22,6 +22,19 @@ status: active
 | Deep pagination ที่แถว ~900k | < 20 ms ด้วย keyset (ไม่ใช่ OFFSET) |
 | Connection acquire (deadpool) | p99 < 100 µs |
 
+## Baseline ที่วัดแล้ว
+
+> [!note] M0 baseline — 2026-07-07 (debug build, localhost, JSON + `Vec<Vec<String>>`)
+> วัดบน `test.db` ตาราง `users` 1,000 แถว (5 คอลัมน์: ตัวเลข + string)
+>
+> | ตัวเลข | ค่า |
+> |---|---|
+> | `POST /query` 100 แถว ผ่าน curl (30 รอบ) | **p50 0.83 ms** (min 0.76 / max 1.13) |
+> | server-side execute (prepare→rows→JSON) | ~0.5 ms |
+> | browser fetch round-trip (Solid UI) | ~5 ms |
+>
+> นี่คือ baseline "ก่อน Arrow" — เทียบอีกครั้งหลัง [[M2 - Arrow Spine]]
+
 ## bench harness (ทำตั้งแต่ M0)
 > [!todo]
 > - [ ] สร้างตาราง 1M แถวด้วย `generate_series` — มีทั้งคอลัมน์ตัวเลข **และ** string (เจอ cliff ของ string เร็ว)
